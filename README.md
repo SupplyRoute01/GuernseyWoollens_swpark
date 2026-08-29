@@ -8,7 +8,42 @@
 python -m http.server 8000
 ```
 
-브라우저에서 `http://localhost:8000`을 엽니다. `index.html`을 직접 열어도 기본 기능은 동작합니다.
+브라우저에서 `http://localhost:8000`을 엽니다. 제품 데이터는 `fetch`로 불러오므로 파일을 직접 열지 말고 로컬 서버를 사용해 주세요.
+
+## 주요 파일
+
+- `index.html`: 메인 페이지와 대표 제품 3개
+- `about.html`: 인터뷰 기반 브랜드 소개
+- `products.html`: 전체 제품 카탈로그
+- `contact.html`: 이메일, SNS, 온라인 스토어 연락 채널
+- `products.json`: 제품명, 가격, 이미지 주소, 구매 링크
+- `story/index.html`: 블로그 글 목록
+- `story/post.html`: JSON 기반 글 상세
+- `story/posts.json`: 블로그 글 데이터
+- `story/admin.html`: 원본 관리 페이지(수정하지 않음)
+- `styles.css`: 전체 디자인과 반응형 스타일
+- `script.js`: 메뉴, 스크롤 효과, 제품 목록 생성
+
+## 제품 추가하기
+
+`products.json` 배열에 아래 형식의 항목을 추가하면 제품 페이지에 자동으로 표시됩니다.
+
+```json
+{
+  "name": "제품명",
+  "price": 138000,
+  "image": "https://이미지-주소.jpg",
+  "url": "https://구매-페이지"
+}
+```
+
+홈은 이름에 `건지울른스`가 포함된 제품 중 앞의 3개를 대표 제품으로 보여줍니다.
+
+## 블로그 글 추가하기
+
+`story/posts.json`에 글을 추가하면 이야기 목록과 홈의 최신 글 3개가 날짜 내림차순으로 자동 갱신됩니다. 기본 필드는 `id`, `title`, `date`, `summary`, `tags`, `body`입니다.
+
+연락처는 `contact.html`과 각 공개 페이지 푸터에 연결되어 있습니다.
 
 ## 먼저 바꿀 내용
 
