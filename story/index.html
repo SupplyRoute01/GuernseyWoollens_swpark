@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="서플라이루트와 건지울른스가 오래 남는 물건과 그 뒤의 사람들을 기록합니다.">
+    <meta name="theme-color" content="#101b2b">
+    <title>이야기 | 건지울른스 · 서플라이루트</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+  </head>
+  <body class="story-index-page">
+    <a class="skip-link" href="#main">본문으로 바로가기</a>
+    <header class="site-header" data-header>
+      <div class="header-inner">
+        <a class="wordmark" href="../index.html" aria-label="건지울른스 홈"><strong>GUERNSEY</strong><span>WOOLLENS · EST. 1976</span></a>
+        <button class="menu-button" type="submit" aria-expanded="false" aria-controls="site-nav" aria-label="메뉴 열기" data-menu-button><span></span><span></span></button>
+        <nav class="site-nav" id="site-nav" aria-label="주요 메뉴" data-menu>
+          <a href="../index.html">홈</a><a href="../about.html">내 소개</a><a href="../products.html">제품</a>
+          <a href="index.html" aria-current="page">이야기</a><a class="nav-contact" href="../contact.html">연락하기</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="blog-hero" aria-labelledby="blog-title">
+        <div data-reveal><p class="coordinate">FIELD JOURNAL / SUPPLY ROUTE</p><h1 id="blog-title">물건 뒤에 있는<br><em>시간을 기록합니다.</em></h1></div>
+        <div class="blog-hero-note" data-reveal><p>만드는 사람과 오래 쓰는 사람, 한 벌이 우리에게 닿기까지의 이야기를 천천히 쌓아갑니다.</p><a class="rule-link rule-link-light" href="admin.html">관리 <span aria-hidden="true">↗</span></a></div>
+      </section>
+      <section class="blog-list-section" aria-labelledby="blog-list-title">
+        <div class="section-label" data-reveal><span>ALL STORIES</span><span data-story-count>— ENTRIES</span></div>
+        <h2 class="visually-hidden" id="blog-list-title">전체 이야기</h2>
+        <ol class="blog-list" id="story-list" aria-live="polite"><li class="blog-loading">글 목록을 불러오는 중입니다.</li></ol>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <a class="wordmark footer-wordmark" href="../index.html"><strong>GUERNSEY</strong><span>WOOLLENS · EST. 1976</span></a>
+      <div class="footer-copy"><p>좋은 브랜드가 한국의 고객에게 닿는 길을 만듭니다.</p><div class="footer-links"><a href="mailto:support@supplyroute.co.kr" target="_blank" rel="noopener noreferrer">support@supplyroute.co.kr</a><a href="https://www.instagram.com/guernseywoollens_kr/" target="_blank" rel="noopener noreferrer">@guernseywoollens_kr</a></div></div>
+      <p class="copyright">© <span data-year>2026</span> SUPPLY ROUTE</p>
+    </footer>
+    <script>
+      (() => {
+        const list = document.querySelector('#story-list');
+        const count = document.querySelector('[data-story-count]');
+        const formatDate = (value) => {
+          const date = new Date(`${value}T00:00:00`);
+          return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('ko-KR', {year:'numeric',month:'2-digit',day:'2-digit'}).format(date);
+        };
+        const createStory = (post, index) => {
+          const item = document.createElement('li'); item.className = 'blog-list-item'; item.setAttribute('data-reveal','');
+          const link = document.createElement('a'); link.href = post.url || `post.html?id=${encodeURIComponent(post.id || '')}`;
+          const number = document.createElement('span'); number.className = 'blog-list-number'; number.textContent = String(index + 1).padStart(2,'0');
+          const content = document.createElement('div'); content.className = 'blog-list-content';
+          const time = document.createElement('time'); time.dateTime = post.date || ''; time.textContent = formatDate(post.date || '');
+          const title = document.createElement('h2'); title.textContent = post.title || '(제목 없음)';
+          const summary = document.createElement('p'); summary.textContent = post.summary || '';
+          content.append(time,title,summary);
+          const arrow = document.createElement('span'); arrow.className = 'blog-list-arrow'; arrow.setAttribute('aria-hidden','true'); arrow.textContent = '↗';
+          link.append(number,content,arrow); item.append(link); return item;
+        };
+        fetch('posts.json',{cache:'no-store'})
+          .then((response) => { if(!response.ok) throw new Error(String(response.status)); return response.json(); })
+          .then((posts) => {
+            const sorted = Array.isArray(posts) ? posts.slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
+            count.textContent = `${String(sorted.length).padStart(2,'0')} ENTRIES`;
+            if(!sorted.length){ list.innerHTML = '<li class="blog-loading">아직 올라온 글이 없습니다.</li>'; return; }
+            list.replaceChildren(...sorted.map(createStory)); list.querySelectorAll('[data-reveal]').forEach((item) => item.classList.add('is-visible'));
+          })
+          .catch(() => { list.innerHTML = '<li class="blog-loading">글 목록을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.</li>'; });
+      })();
+    </script>
+  </body>
+</html>
+
