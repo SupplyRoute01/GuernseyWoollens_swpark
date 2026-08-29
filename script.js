@@ -61,16 +61,13 @@ if (prefersReducedMotion || !('IntersectionObserver' in window)) {
   revealItems.forEach((item) => revealObserver.observe(item));
 }
 
-function initScrubHero() {
-  const section = document.querySelector('[data-scrub-hero]');
-  const video = document.querySelector('[data-scrub-video]');
-  if (!section || !video || prefersReducedMotion) return;
+function initHeroVideo() {
+  const video = document.querySelector('[data-hero-video]');
+  if (!video) return;
 
-  let duration = 6;
-  let isTicking = false;
   const mobileMedia = window.matchMedia('(max-width: 620px)');
 
-  const selectScrubSource = () => {
+  const selectVideoSource = () => {
     const nextSrc = mobileMedia.matches ? video.dataset.mobileSrc : video.dataset.desktopSrc;
     const nextPoster = mobileMedia.matches ? video.dataset.mobilePoster : video.dataset.desktopPoster;
     if (nextPoster) video.poster = nextPoster;
@@ -80,42 +77,29 @@ function initScrubHero() {
     }
   };
 
-  const updateScrub = () => {
-    isTicking = false;
-    const rect = section.getBoundingClientRect();
-    const scrollable = Math.max(1, rect.height - window.innerHeight);
-    const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-    const nextTime = progress * duration;
-    if (Number.isFinite(nextTime) && Math.abs(video.currentTime - nextTime) > 0.035) {
-      video.currentTime = nextTime;
+  const playVideo = () => {
+    if (prefersReducedMotion) {
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+      video.currentTime = 0;
+      video.pause();
+      return;
     }
+    const playRequest = video.play();
+    if (playRequest) playRequest.catch(() => {});
   };
 
-  const requestScrub = () => {
-    if (isTicking) return;
-    isTicking = true;
-    window.requestAnimationFrame(updateScrub);
-  };
-
-  const primeScrub = () => {
-    duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : duration;
-    video.pause();
-    updateScrub();
-  };
-
-  video.addEventListener('loadedmetadata', primeScrub);
-  video.addEventListener('canplay', primeScrub);
-  selectScrubSource();
-  if (video.readyState >= 1) primeScrub();
-  window.addEventListener('scroll', requestScrub, { passive: true });
+  video.addEventListener('loadedmetadata', playVideo);
+  video.addEventListener('canplay', playVideo);
+  selectVideoSource();
+  playVideo();
   window.addEventListener('resize', () => {
-    selectScrubSource();
-    requestScrub();
+    selectVideoSource();
+    playVideo();
   });
-  requestScrub();
 }
 
-initScrubHero();
+initHeroVideo();
 
 const year = document.querySelector('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
