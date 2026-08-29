@@ -61,6 +61,62 @@ if (prefersReducedMotion || !('IntersectionObserver' in window)) {
   revealItems.forEach((item) => revealObserver.observe(item));
 }
 
+function initScrubHero() {
+  const section = document.querySelector('[data-scrub-hero]');
+  const video = document.querySelector('[data-scrub-video]');
+  if (!section || !video || prefersReducedMotion) return;
+
+  let duration = 6;
+  let isTicking = false;
+  const mobileMedia = window.matchMedia('(max-width: 620px)');
+
+  const selectScrubSource = () => {
+    const nextSrc = mobileMedia.matches ? video.dataset.mobileSrc : video.dataset.desktopSrc;
+    const nextPoster = mobileMedia.matches ? video.dataset.mobilePoster : video.dataset.desktopPoster;
+    if (nextPoster) video.poster = nextPoster;
+    if (nextSrc && !video.currentSrc.endsWith(nextSrc) && video.getAttribute('src') !== nextSrc) {
+      video.setAttribute('src', nextSrc);
+      video.load();
+    }
+  };
+
+  const updateScrub = () => {
+    isTicking = false;
+    const rect = section.getBoundingClientRect();
+    const scrollable = Math.max(1, rect.height - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+    const nextTime = progress * duration;
+    if (Number.isFinite(nextTime) && Math.abs(video.currentTime - nextTime) > 0.035) {
+      video.currentTime = nextTime;
+    }
+  };
+
+  const requestScrub = () => {
+    if (isTicking) return;
+    isTicking = true;
+    window.requestAnimationFrame(updateScrub);
+  };
+
+  const primeScrub = () => {
+    duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : duration;
+    video.pause();
+    updateScrub();
+  };
+
+  video.addEventListener('loadedmetadata', primeScrub);
+  video.addEventListener('canplay', primeScrub);
+  selectScrubSource();
+  if (video.readyState >= 1) primeScrub();
+  window.addEventListener('scroll', requestScrub, { passive: true });
+  window.addEventListener('resize', () => {
+    selectScrubSource();
+    requestScrub();
+  });
+  requestScrub();
+}
+
+initScrubHero();
+
 const year = document.querySelector('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
 

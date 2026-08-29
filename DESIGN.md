@@ -60,7 +60,7 @@
 - 블로그 임시 글: `journal-list` 안의 각 `<article>`
 - 이미지 교체: `assets/guernsey-*.jpg` 파일명을 유지하면 마크업 수정 없이 교체할 수 있다.
 - 공통 로고: `assets/guernsey-logo.png`를 공개 페이지 헤더와 푸터에서 사용하며, 560×300 가로형 원본 비율을 유지해 축소한다.
-- 히어로 스크럽 영상: `assets/hero-scrub.mp4`, `assets/hero-scrub-m.mp4`와 각 포스터 이미지는 Git에 포함되어 정적 호스팅에서 직접 접근 가능해야 한다.
+- 히어로 스크럽 영상: 홈 첫 화면은 스크롤 위치를 `video.currentTime`에 연결한다. `assets/hero-scrub.mp4`, `assets/hero-scrub-m.mp4`와 각 포스터 이미지는 Git에 포함되어 정적 호스팅에서 직접 접근 가능해야 한다.
 - 제품 데이터: `products.json`에 `name`, `price`, `image`, `url`을 추가하면 제품 페이지와 홈 대표 제품 목록이 자동 갱신된다.
 - 공개 제품 목록은 제품명에 `건지울른스`가 포함된 항목만 사용하며, 홈은 그중 앞의 3개를 자동 선택한다.
 - 대표 제품 상세: `product-detail.html`의 구매 링크와 제품 정보, `styles.css`의 `.product-detail-*` 규칙

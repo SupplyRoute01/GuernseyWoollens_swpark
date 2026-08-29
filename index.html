@@ -92,7 +92,7 @@
     </header>
 
     <main id="main">
-      <section class="hero" id="home" aria-labelledby="hero-title">
+      <section class="hero hero-scrub-section" id="home" aria-labelledby="hero-title" data-scrub-hero>
         <div class="hero-copy" data-reveal>
           <p class="coordinate">49°27′N · 2°32′W / GUERNSEY ISLAND</p>
           <h1 id="hero-title">바다에서 시작된<br><em>한 벌의 원칙.</em></h1>
@@ -110,8 +110,20 @@
             <div><dt>Detail</dt><dd>Anchor motif</dd></div>
           </dl>
         </div>
-        <figure class="hero-image" data-reveal>
-          <img src="assets/guernsey-hero.jpg" alt="건지 항구를 배경으로 네이비 나그랑 스웨터를 입은 남성" width="960" height="1280">
+        <figure class="hero-image hero-scrub" data-reveal>
+          <video
+            data-scrub-video
+            data-desktop-src="assets/hero-scrub.mp4"
+            data-mobile-src="assets/hero-scrub-m.mp4"
+            data-desktop-poster="assets/hero-poster.jpg"
+            data-mobile-poster="assets/hero-poster-m.jpg"
+            src="assets/hero-scrub.mp4"
+            muted
+            playsinline
+            preload="auto"
+            poster="assets/hero-poster.jpg"
+            aria-label="건지울른스 스웨터의 질감과 움직임을 보여주는 스크롤 연동 영상"
+          ></video>
           <figcaption><span>FIELD NOTE / 01</span><span>ST. PETER PORT, GUERNSEY</span></figcaption>
           <div class="anchor-stamp" aria-hidden="true">⚓</div>
         </figure>
