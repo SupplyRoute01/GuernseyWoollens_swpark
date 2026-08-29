@@ -59,6 +59,7 @@
 - 제품 정보: `index.html`의 `product-spec-table`
 - 블로그 임시 글: `journal-list` 안의 각 `<article>`
 - 이미지 교체: `assets/guernsey-*.jpg` 파일명을 유지하면 마크업 수정 없이 교체할 수 있다.
+- 공통 로고: `assets/guernsey-logo.png`를 공개 페이지 헤더와 푸터에서 사용하며, 실제 비율을 유지해 축소한다.
 - 제품 데이터: `products.json`에 `name`, `price`, `image`, `url`을 추가하면 제품 페이지와 홈 대표 제품 목록이 자동 갱신된다.
 - 공개 제품 목록은 제품명에 `건지울른스`가 포함된 항목만 사용하며, 홈은 그중 앞의 3개를 자동 선택한다.
 - 대표 제품 상세: `product-detail.html`의 구매 링크와 제품 정보, `styles.css`의 `.product-detail-*` 규칙
