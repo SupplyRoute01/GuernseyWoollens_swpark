@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /story/admin.html
+
+Sitemap: https://guernsey-woollens-swpark.vercel.app/sitemap.xml

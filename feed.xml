@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>건지울른스 이야기</title>
+    <link>https://guernsey-woollens-swpark.vercel.app/story/</link>
+    <description>헤리티지 브랜드와 오래 입는 옷, 제품 뒤에 있는 사람과 시간을 기록합니다.</description>
+    <language>ko-KR</language>
+    <lastBuildDate>Sat, 29 Aug 2026 08:00:00 +0900</lastBuildDate>
+    <atom:link href="https://guernsey-woollens-swpark.vercel.app/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>니트의 촉감이 까슬거리는 이유는 무엇인가요?</title>
+      <link>https://guernsey-woollens-swpark.vercel.app/story/why-knit-feels-scratchy.html</link>
+      <guid isPermaLink="true">https://guernsey-woollens-swpark.vercel.app/story/why-knit-feels-scratchy.html</guid>
+      <pubDate>Sat, 29 Aug 2026 08:00:00 +0900</pubDate>
+      <description>섬유 굵기와 실의 꼬임, 편직 밀도를 중심으로 코튼 니트의 촉감을 이해하는 방법을 정리했습니다.</description>
+    </item>
+    <item>
+      <title>여기서는 살 수 없어서, 길을 만들기 시작했습니다</title>
+      <link>https://guernsey-woollens-swpark.vercel.app/story/supply-route-origin.html</link>
+      <guid isPermaLink="true">https://guernsey-woollens-swpark.vercel.app/story/supply-route-origin.html</guid>
+      <pubDate>Sat, 29 Aug 2026 07:00:00 +0900</pubDate>
+      <description>도쿄의 오래된 편집숍에서 만난 한 벌의 니트와, 좋은 브랜드가 한국에 닿는 길을 만들게 된 이야기입니다.</description>
+    </item>
+    <item>
+      <title>우리가 이 브랜드를 시작한 이유</title>
+      <link>https://guernsey-woollens-swpark.vercel.app/story/brand-origin.html</link>
+      <guid isPermaLink="true">https://guernsey-woollens-swpark.vercel.app/story/brand-origin.html</guid>
+      <pubDate>Thu, 20 Aug 2026 08:00:00 +0900</pubDate>
+      <description>작은 불편에서 시작된 고민이 어떻게 하나의 브랜드가 되었는지, 그 첫 마음을 기록합니다.</description>
+    </item>
+  </channel>
+</rss>
