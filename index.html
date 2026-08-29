@@ -33,10 +33,10 @@
         </button>
         <nav class="site-nav" id="site-nav" aria-label="주요 메뉴" data-menu>
           <a href="#home">홈</a>
-          <a href="#about">내 소개</a>
-          <a href="#products">제품</a>
-          <a href="#journal">이야기</a>
-          <a class="nav-contact" href="#contact">연락하기</a>
+          <a href="about.html">내 소개</a>
+          <a href="products.html">제품</a>
+          <a href="story/">이야기</a>
+          <a class="nav-contact" href="contact.html">연락하기</a>
         </nav>
       </div>
     </header>
@@ -51,8 +51,8 @@
             건지울른스의 코튼 나그랑 크루넥입니다.
           </p>
           <div class="hero-actions">
-            <a class="button button-signal" href="#products">대표 제품 살펴보기</a>
-            <a class="rule-link" href="#about">1976년부터 이어온 이야기 <span aria-hidden="true">↘</span></a>
+            <a class="button button-signal" href="#featured-products">대표 제품 살펴보기</a>
+            <a class="rule-link" href="about.html">서플라이루트가 시작된 이야기 <span aria-hidden="true">↘</span></a>
           </div>
           <dl class="hero-specs" aria-label="대표 제품 요약">
             <div><dt>Material</dt><dd>Cotton knit</dd></div>
@@ -91,7 +91,7 @@
               입었습니다. 가족을 위해 바다로 나선 사람들의 실용성과 강인함은 지금도
               나그랑 선과 견고한 마감 안에 남아 있습니다.
             </p>
-            <a class="rule-link" href="#journal">브랜드 기록 읽기 <span aria-hidden="true">→</span></a>
+            <a class="rule-link" href="about.html">우리의 이야기 읽기 <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <figure class="heritage-photo" data-reveal>
@@ -120,9 +120,23 @@
             <div><dt>사이즈</dt><dd>상세 사이즈 준비 중</dd></div>
           </dl>
           <div class="product-actions">
-            <a class="button button-navy" href="#contact">제품 문의하기</a>
-            <p>가격과 재고 정보는<br>실제 내용으로 교체해 주세요.</p>
+            <a class="button button-navy" href="https://brand.naver.com/supplyroute/products/10875365708" target="_blank" rel="noopener noreferrer">컬렉션 구매하기</a>
+            <p>₩138,000<br>네이버 브랜드 스토어에서 구매</p>
           </div>
+        </div>
+      </section>
+
+      <section class="featured-products section" id="featured-products" aria-labelledby="featured-title">
+        <div class="section-label" data-reveal><span>ONLINE STORE</span><span>SELECTED COLOURS / 03</span></div>
+        <div class="catalog-heading" data-reveal>
+          <div>
+            <p class="coordinate">GUERNSEY WOOLLENS</p>
+            <h2 id="featured-title">지금 만날 수 있는<br>대표 제품</h2>
+          </div>
+          <a class="rule-link" href="products.html">전체 제품 보기 <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="product-card-grid product-card-grid-featured" data-products-grid data-mode="featured" data-limit="3" aria-live="polite">
+          <p class="products-loading">제품 정보를 불러오는 중입니다.</p>
         </div>
       </section>
 
@@ -157,23 +171,10 @@
           <h2 id="journal-title">섬에서 보내온 기록</h2>
           <p>옷의 배경을 알면 한 벌을 바라보는 시간이 달라집니다.</p>
         </div>
-        <div class="journal-list">
-          <article data-reveal>
-            <p><time datetime="2026-08-18">2026. 08. 18</time> · Heritage</p>
-            <h3>건지 스웨터가 바다의 작업복이 된 이유</h3>
-            <a href="#journal" aria-label="건지 스웨터가 바다의 작업복이 된 이유 읽기">기록 읽기 <span aria-hidden="true">↗</span></a>
-          </article>
-          <article data-reveal>
-            <p><time datetime="2026-07-09">2026. 07. 09</time> · Material</p>
-            <h3>울의 구조를 코튼으로 옮기는 방법</h3>
-            <a href="#journal" aria-label="울의 구조를 코튼으로 옮기는 방법 읽기">기록 읽기 <span aria-hidden="true">↗</span></a>
-          </article>
-          <article data-reveal>
-            <p><time datetime="2026-06-21">2026. 06. 21</time> · Care</p>
-            <h3>니트 한 벌을 오래 입는 세탁과 보관</h3>
-            <a href="#journal" aria-label="니트 한 벌을 오래 입는 세탁과 보관 읽기">기록 읽기 <span aria-hidden="true">↗</span></a>
-          </article>
+        <div class="journal-list" data-home-stories aria-live="polite">
+          <p class="home-stories-loading">최신 이야기를 불러오는 중입니다.</p>
         </div>
+        <a class="button button-light journal-more" href="story/">이야기 더 보기</a>
       </section>
 
       <section class="contact" id="contact" aria-labelledby="contact-title">
@@ -183,8 +184,8 @@
           <h2 id="contact-title">오래 입을 한 벌에 관해<br>무엇이든 물어보세요.</h2>
           <p>제품, 사이즈, 입고 일정과 협업 문의를 남겨주시면 확인 후 답변드리겠습니다.</p>
           <div class="contact-actions">
-            <a class="button button-light" href="mailto:support@supplyroute.co.kr">support@supplyroute.co.kr</a>
-            <a class="rule-link rule-link-light" href="https://www.instagram.com/supplyroute/">Instagram <span aria-hidden="true">↗</span></a>
+            <a class="button button-light" href="contact.html">연락처 한눈에 보기</a>
+            <a class="rule-link rule-link-light" href="https://www.instagram.com/guernseywoollens_kr/" target="_blank" rel="noopener noreferrer">@guernseywoollens_kr <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -194,7 +195,7 @@
       <a class="wordmark footer-wordmark" href="#home"><strong>GUERNSEY</strong><span>WOOLLENS · EST. 1976</span></a>
       <div class="footer-copy">
         <p>영국 건지 섬의 편직 전통을 오늘의 옷으로 잇습니다.</p>
-        <p>상호·사업자 정보·주소는 실제 정보로 교체해 주세요.</p>
+        <div class="footer-links"><a href="mailto:support@supplyroute.co.kr" target="_blank" rel="noopener noreferrer">support@supplyroute.co.kr</a><a href="https://www.instagram.com/guernseywoollens_kr/" target="_blank" rel="noopener noreferrer">@guernseywoollens_kr</a></div>
       </div>
       <p class="copyright">© <span data-year>2026</span> GUERNSEY WOOLLENS</p>
     </footer>
