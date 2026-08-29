@@ -66,6 +66,7 @@ if (year) year.textContent = new Date().getFullYear();
 
 const productGrids = document.querySelectorAll('[data-products-grid]');
 const productCount = document.querySelector('[data-product-count]');
+const isGuernseyProduct = (product) => String(product?.name || '').includes('건지울른스');
 const wonFormatter = new Intl.NumberFormat('ko-KR', {
   style: 'currency',
   currency: 'KRW',
@@ -119,7 +120,15 @@ function createProductCard(product, index) {
   buyLink.setAttribute('aria-label', `${product.name} 구매하기 — 새 탭에서 열림`);
 
   footer.append(price, buyLink);
-  content.append(label, title, footer);
+  content.append(label, title);
+  if (String(product.url).includes('/10875365708')) {
+    const detailLink = document.createElement('a');
+    detailLink.className = 'product-detail-link';
+    detailLink.href = 'product-detail.html';
+    detailLink.textContent = '제품 상세 보기';
+    content.append(detailLink);
+  }
+  content.append(footer);
   article.append(imageLink, content);
   return article;
 }
@@ -139,7 +148,7 @@ function addProductStructuredData(products) {
   script.textContent = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: '건지울른스와 서플라이루트 제품',
+    name: '건지울른스 제품',
     itemListElement: products.map((product, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -147,9 +156,7 @@ function addProductStructuredData(products) {
         '@type': 'Product',
         name: product.name,
         image: product.image,
-        ...(String(product.name).includes('건지울른스')
-          ? { brand: { '@type': 'Brand', name: '건지울른스' } }
-          : {}),
+        brand: { '@type': 'Brand', name: '건지울른스' },
         offers: {
           '@type': 'Offer',
           url: product.url,
@@ -169,17 +176,15 @@ async function loadProducts() {
     const response = await fetch('products.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const products = await response.json();
-    if (!Array.isArray(products)) throw new TypeError('Products must be an array');
+    const sourceProducts = await response.json();
+    if (!Array.isArray(sourceProducts)) throw new TypeError('Products must be an array');
+    const products = sourceProducts.filter(isGuernseyProduct);
     addProductStructuredData(products);
     if (productCount) productCount.textContent = String(products.length).padStart(2, '0');
 
     productGrids.forEach((grid) => {
-      const mode = grid.dataset.mode;
       const limit = Number(grid.dataset.limit) || products.length;
-      const visibleProducts = mode === 'featured'
-        ? products.filter((product) => product.name.includes('건지울른스')).slice(0, limit)
-        : products.slice(0, limit);
+      const visibleProducts = products.slice(0, limit);
 
       const fragment = document.createDocumentFragment();
       visibleProducts.forEach((product, index) => fragment.append(createProductCard(product, index)));
@@ -198,6 +203,28 @@ async function loadProducts() {
 }
 
 loadProducts();
+
+const detailRelatedGrid = document.querySelector('[data-detail-related]');
+
+async function loadDetailRelated() {
+  if (!detailRelatedGrid) return;
+  try {
+    const response = await fetch('products.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const products = await response.json();
+    const related = Array.isArray(products)
+      ? products
+          .filter((product) => product.name.includes('건지울른스 코튼 나그랑 크루넥 스웨터 -'))
+          .slice(-3)
+      : [];
+    if (!related.length) throw new Error('No related products');
+    detailRelatedGrid.replaceChildren(...related.map(createProductCard));
+  } catch (error) {
+    showProductError(detailRelatedGrid);
+  }
+}
+
+loadDetailRelated();
 
 const homeStories = document.querySelector('[data-home-stories]');
 const formatStoryDate = (value) => {

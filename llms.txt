@@ -15,6 +15,7 @@
 - 홈: https://guernsey-woollens-swpark.vercel.app/
 - 브랜드와 운영자 이야기: https://guernsey-woollens-swpark.vercel.app/about.html
 - 제품 목록: https://guernsey-woollens-swpark.vercel.app/products.html
+- 대표 제품 상세: https://guernsey-woollens-swpark.vercel.app/product-detail.html
 - 이야기: https://guernsey-woollens-swpark.vercel.app/story/
 - 연락하기: https://guernsey-woollens-swpark.vercel.app/contact.html
 

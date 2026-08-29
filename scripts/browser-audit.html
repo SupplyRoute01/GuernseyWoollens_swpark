@@ -30,8 +30,19 @@
       });
 
       Promise.all([
+        load('제품', '../products.html', (document) => {
+          const cards = [...document.querySelectorAll('[data-products-grid] .product-card')];
+          return {
+            '제품 건지울른스 29개': cards.length === 29,
+            '제품 타 브랜드 제외': cards.every((card) => card.querySelector('h3')?.textContent.includes('건지울른스')),
+            '제품 카운트 29': document.querySelector('[data-product-count]')?.textContent.trim() === '29',
+            '제품 375px 가로 넘침 없음': document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+          };
+        }),
         load('홈', '../index.html', (document) => ({
           '홈 최신 글 3개': document.querySelectorAll('[data-home-stories] article').length === 3,
+          '홈 건지울른스 제품 3개': document.querySelectorAll('[data-products-grid] .product-card').length === 3
+            && [...document.querySelectorAll('[data-products-grid] .product-card h3')].every((title) => title.textContent.includes('건지울른스')),
           '홈 정적 글 링크': [...document.querySelectorAll('[data-home-stories] article a')].every((link) => link.getAttribute('href')?.endsWith('.html')),
           '홈 375px 가로 넘침 없음': document.documentElement.scrollWidth <= document.documentElement.clientWidth,
         })),
