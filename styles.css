@@ -507,4 +507,3 @@ section[id] { scroll-margin-top: 88px; }
   .button, .menu-button, .site-nav .nav-contact { border: 1px solid ButtonText; }
   .hero-ghost, .contact-mark { color: CanvasText; -webkit-text-stroke: 0; opacity: .08; }
 }
-
