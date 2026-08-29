@@ -119,7 +119,15 @@ function createProductCard(product, index) {
   buyLink.setAttribute('aria-label', `${product.name} 구매하기 — 새 탭에서 열림`);
 
   footer.append(price, buyLink);
-  content.append(label, title, footer);
+  content.append(label, title);
+  if (String(product.url).includes('/10875365708')) {
+    const detailLink = document.createElement('a');
+    detailLink.className = 'product-detail-link';
+    detailLink.href = 'product-detail.html';
+    detailLink.textContent = '제품 상세 보기';
+    content.append(detailLink);
+  }
+  content.append(footer);
   article.append(imageLink, content);
   return article;
 }
@@ -198,6 +206,28 @@ async function loadProducts() {
 }
 
 loadProducts();
+
+const detailRelatedGrid = document.querySelector('[data-detail-related]');
+
+async function loadDetailRelated() {
+  if (!detailRelatedGrid) return;
+  try {
+    const response = await fetch('products.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const products = await response.json();
+    const related = Array.isArray(products)
+      ? products
+          .filter((product) => product.name.includes('건지울른스 코튼 나그랑 크루넥 스웨터 -'))
+          .slice(-3)
+      : [];
+    if (!related.length) throw new Error('No related products');
+    detailRelatedGrid.replaceChildren(...related.map(createProductCard));
+  } catch (error) {
+    showProductError(detailRelatedGrid);
+  }
+}
+
+loadDetailRelated();
 
 const homeStories = document.querySelector('[data-home-stories]');
 const formatStoryDate = (value) => {

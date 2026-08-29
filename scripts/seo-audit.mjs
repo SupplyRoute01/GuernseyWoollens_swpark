@@ -10,6 +10,7 @@ const publicPages = [
   'index.html',
   'about.html',
   'products.html',
+  'product-detail.html',
   'story/index.html',
   ...posts.filter((post) => !post.draft).map((post) => `story/${post.url}`),
   'contact.html',
