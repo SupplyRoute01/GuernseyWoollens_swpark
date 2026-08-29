@@ -4,11 +4,13 @@ const header = document.querySelector('[data-header]');
 const menuLinks = menu?.querySelectorAll('a') ?? [];
 
 function closeMenu() {
-  if (!menuButton || !menu) return;
+  if (!menuButton || !menu) return false;
+  const wasOpen = menuButton.getAttribute('aria-expanded') === 'true';
   menuButton.setAttribute('aria-expanded', 'false');
   menuButton.setAttribute('aria-label', '메뉴 열기');
   menu.classList.remove('is-open');
   document.body.classList.remove('menu-open');
+  return wasOpen;
 }
 
 menuButton?.addEventListener('click', () => {
@@ -22,14 +24,13 @@ menuButton?.addEventListener('click', () => {
 menuLinks.forEach((link) => link.addEventListener('click', closeMenu));
 
 window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    closeMenu();
+  if (event.key === 'Escape' && closeMenu()) {
     menuButton?.focus();
   }
 });
 
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 900) closeMenu();
+  if (window.innerWidth > 980) closeMenu();
 });
 
 function updateHeader() {
