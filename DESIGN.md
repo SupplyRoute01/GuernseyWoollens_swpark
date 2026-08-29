@@ -45,4 +45,27 @@
 - 제품 정보: `index.html`의 `product-spec-table`
 - 블로그 임시 글: `journal-list` 안의 각 `<article>`
 - 이미지 교체: `assets/guernsey-*.jpg` 파일명을 유지하면 마크업 수정 없이 교체할 수 있다.
+- 제품 데이터: `products.json`에 `name`, `price`, `image`, `url`을 추가하면 제품 페이지와 홈 대표 제품 목록이 자동 갱신된다.
+- 홈 대표 제품은 제품명에 `건지울른스`가 포함된 항목 중 앞의 3개를 자동 선택한다.
+
+## About page narrative
+
+- `about.html`은 창업자 인터뷰를 바탕으로 한 1인칭 브랜드 스토리다.
+- 서사 순서: 2019년 도쿄에서의 발견 → 첫 시즌의 위기 → 원형을 지키는 원칙 → 고객의 니트 복원 → 오래 남기겠다는 약속.
+- 핵심 헤드라인은 “여기서는 살 수 없어서, 길을 만들기 시작했습니다.”이며 `Supply Route`라는 이름의 의미와 직접 연결한다.
+- 대표 사진은 현재 `assets/guernsey-harbour.jpg`를 임시 사용한다. 창업자 또는 팀 사진이 준비되면 같은 세로 프레임으로 교체한다.
+- 인터뷰의 구체적인 장면과 말투를 유지하며, 기업 보도자료처럼 3인칭으로 바꾸지 않는다.
+
+## Story integration
+
+- 블로그는 `story/` 아래에 두고 공통 `../styles.css`, `../script.js`를 사용해 본 사이트와 헤더·네비게이션·푸터·모바일 메뉴를 공유한다.
+- 글 본문은 가독성을 위해 최대 `680px`로 제한한다.
+- `story/posts.json`의 샘플 글 2개는 유지하고, 홈은 날짜 내림차순 최신 3개를 자동 표시한다.
+- `story/admin.html`은 블로그 키트 원본을 그대로 보존하며 디자인 통합 대상에서 제외한다.
+
+## Contact integration
+
+- `contact.html`은 이메일, SNS, 스토어의 세 경로를 아이콘 없는 대형 텍스트 버튼으로 보여준다.
+- 모든 외부 채널은 새 탭으로 열고 `noopener noreferrer`를 함께 사용한다.
+- 공개 페이지의 공통 푸터에는 이메일과 `@guernseywoollens_kr` 링크를 항상 노출한다.
 
