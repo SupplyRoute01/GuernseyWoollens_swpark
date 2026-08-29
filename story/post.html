@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,follow">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="theme-color" content="#101b2b">
@@ -82,7 +83,7 @@
         };
         const render = (items) => {
           const id = new URLSearchParams(location.search).get('id') || new URLSearchParams(location.search).get('slug');
-          const posts = Array.isArray(items) ? items.slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
+          const posts = Array.isArray(items) ? items.filter((post) => !post.draft).slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
           const index = posts.findIndex((post) => String(post.id) === id || (post.url && String(post.url).replace(/\.html$/,'') === id));
           if(index < 0){ notFound(); return; }
           const post = posts[index]; setMetadata(post);

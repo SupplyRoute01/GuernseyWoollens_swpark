@@ -3,9 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="서플라이루트와 건지울른스가 오래 남는 물건과 그 뒤의 사람들을 기록합니다.">
+    <meta name="description" content="건지울른스와 서플라이루트가 헤리티지 브랜드, 오래 입는 옷, 제품 뒤에 있는 사람과 시간을 기록합니다.">
     <meta name="theme-color" content="#101b2b">
-    <title>이야기 | 건지울른스 · 서플라이루트</title>
+    <link rel="canonical" href="https://guernsey-woollens-swpark.vercel.app/story/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="건지울른스">
+    <meta property="og:title" content="건지울른스 이야기 | 헤리티지와 오래 입는 옷">
+    <meta property="og:description" content="헤리티지 브랜드와 오래 입는 옷, 제품 뒤에 있는 사람과 시간을 기록합니다.">
+    <meta property="og:url" content="https://guernsey-woollens-swpark.vercel.app/story/">
+    <meta property="og:image" content="https://guernsey-woollens-swpark.vercel.app/assets/guernsey-harbour.jpg">
+    <title>건지울른스 이야기 | 헤리티지와 오래 입는 옷</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "url": "https://guernsey-woollens-swpark.vercel.app/story/",
+        "name": "건지울른스 이야기",
+        "description": "헤리티지 브랜드와 오래 입는 옷, 제품 뒤에 있는 사람과 시간에 관한 기록",
+        "inLanguage": "ko-KR"
+      }
+    </script>
     <link rel="stylesheet" href="../styles.css">
     <script src="../script.js" defer></script>
   </head>
@@ -60,7 +78,7 @@
         fetch('posts.json',{cache:'no-store'})
           .then((response) => { if(!response.ok) throw new Error(String(response.status)); return response.json(); })
           .then((posts) => {
-            const sorted = Array.isArray(posts) ? posts.slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
+            const sorted = Array.isArray(posts) ? posts.filter((post) => !post.draft).slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
             count.textContent = `${String(sorted.length).padStart(2,'0')} ENTRIES`;
             if(!sorted.length){ list.innerHTML = '<li class="blog-loading">아직 올라온 글이 없습니다.</li>'; return; }
             list.replaceChildren(...sorted.map(createStory)); list.querySelectorAll('[data-reveal]').forEach((item) => item.classList.add('is-visible'));

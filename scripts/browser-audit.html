@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>BROWSER AUDIT RUNNING</title>
+    <style>
+      iframe { width: 375px; height: 812px; border: 0; display: block; }
+    </style>
+  </head>
+  <body>
+    <p id="result">검사 중</p>
+    <script>
+      const checks = {};
+      const load = (name, source, inspect) => new Promise((resolve) => {
+        const frame = document.createElement('iframe');
+        frame.title = name;
+        frame.addEventListener('load', () => {
+          setTimeout(() => {
+            try {
+              Object.assign(checks, inspect(frame.contentDocument));
+            } catch (error) {
+              checks[`${name} 실행`] = false;
+            }
+            frame.remove();
+            resolve();
+          }, 1200);
+        }, { once: true });
+        frame.src = source;
+        document.body.append(frame);
+      });
+
+      Promise.all([
+        load('홈', '../index.html', (document) => ({
+          '홈 최신 글 3개': document.querySelectorAll('[data-home-stories] article').length === 3,
+          '홈 정적 글 링크': [...document.querySelectorAll('[data-home-stories] article a')].every((link) => link.getAttribute('href')?.endsWith('.html')),
+          '홈 375px 가로 넘침 없음': document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+        })),
+        load('이야기', '../story/', (document) => {
+          const button = document.querySelector('[data-menu-button]');
+          button?.click();
+          return {
+            '이야기 목록 3개': document.querySelectorAll('#story-list .blog-list-item').length === 3,
+            '이야기 공통 네비게이션·푸터': Boolean(document.querySelector('.site-nav') && document.querySelector('.site-footer')),
+            '이야기 현재 메뉴': document.querySelector('.site-nav [aria-current="page"]')?.textContent.trim() === '이야기',
+            '모바일 메뉴 열림': button?.getAttribute('aria-expanded') === 'true' && document.querySelector('[data-menu]')?.classList.contains('is-open'),
+            '이야기 375px 가로 넘침 없음': document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+          };
+        }),
+        load('글 상세', '../story/why-knit-feels-scratchy.html', (document) => ({
+          '글 상세 공통 네비게이션·푸터': Boolean(document.querySelector('.site-nav') && document.querySelector('.site-footer')),
+          '글 상세 현재 메뉴': document.querySelector('.site-nav [aria-current="page"]')?.textContent.trim() === '이야기',
+          '글 상세 FAQ 3개': document.querySelectorAll('.post-faq details').length === 3,
+          '글 본문 폭 680px 이하': document.querySelector('.post-shell')?.getBoundingClientRect().width <= 680,
+          '글 상세 375px 가로 넘침 없음': document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+        })),
+      ]).then(() => {
+        const passed = Object.values(checks).every(Boolean);
+        document.title = passed ? 'BROWSER AUDIT PASS' : 'BROWSER AUDIT FAIL';
+        document.querySelector('#result').textContent = JSON.stringify(checks);
+        document.body.dataset.audit = passed ? 'pass' : 'fail';
+      });
+    </script>
+  </body>
+</html>

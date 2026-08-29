@@ -132,6 +132,36 @@ function showProductError(grid) {
   grid.append(message);
 }
 
+function addProductStructuredData(products) {
+  if (!document.body.classList.contains('products-page')) return;
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: '건지울른스와 서플라이루트 제품',
+    itemListElement: products.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.name,
+        image: product.image,
+        ...(String(product.name).includes('건지울른스')
+          ? { brand: { '@type': 'Brand', name: '건지울른스' } }
+          : {}),
+        offers: {
+          '@type': 'Offer',
+          url: product.url,
+          priceCurrency: 'KRW',
+          price: String(product.price),
+        },
+      },
+    })),
+  });
+  document.head.append(script);
+}
+
 async function loadProducts() {
   if (!productGrids.length) return;
 
@@ -141,6 +171,7 @@ async function loadProducts() {
 
     const products = await response.json();
     if (!Array.isArray(products)) throw new TypeError('Products must be an array');
+    addProductStructuredData(products);
     if (productCount) productCount.textContent = String(products.length).padStart(2, '0');
 
     productGrids.forEach((grid) => {
@@ -213,7 +244,7 @@ async function loadHomeStories() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const posts = await response.json();
     const latest = Array.isArray(posts)
-      ? posts.slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || ''))).slice(0, 3)
+      ? posts.filter((post) => !post.draft).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || ''))).slice(0, 3)
       : [];
     if (!latest.length) {
       homeStories.innerHTML = '<p class="home-stories-loading">아직 등록된 이야기가 없습니다.</p>';

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>375px mobile preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 375px; height: 812px; overflow: hidden; background: #f4f0e8; }
+      iframe { display: block; width: 375px; height: 812px; border: 0; }
+    </style>
+  </head>
+  <body>
+    <iframe id="preview" src="../story/why-knit-feels-scratchy.html" title="375px 글 상세 미리보기"></iframe>
+    <script>
+      document.querySelector('#preview').addEventListener('load', (event) => {
+        event.currentTarget.contentWindow.scrollTo(0, 0);
+      });
+    </script>
+  </body>
+</html>
