@@ -66,6 +66,7 @@ if (year) year.textContent = new Date().getFullYear();
 
 const productGrids = document.querySelectorAll('[data-products-grid]');
 const productCount = document.querySelector('[data-product-count]');
+const isGuernseyProduct = (product) => String(product?.name || '').includes('건지울른스');
 const wonFormatter = new Intl.NumberFormat('ko-KR', {
   style: 'currency',
   currency: 'KRW',
@@ -147,7 +148,7 @@ function addProductStructuredData(products) {
   script.textContent = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: '건지울른스와 서플라이루트 제품',
+    name: '건지울른스 제품',
     itemListElement: products.map((product, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -155,9 +156,7 @@ function addProductStructuredData(products) {
         '@type': 'Product',
         name: product.name,
         image: product.image,
-        ...(String(product.name).includes('건지울른스')
-          ? { brand: { '@type': 'Brand', name: '건지울른스' } }
-          : {}),
+        brand: { '@type': 'Brand', name: '건지울른스' },
         offers: {
           '@type': 'Offer',
           url: product.url,
@@ -177,17 +176,15 @@ async function loadProducts() {
     const response = await fetch('products.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const products = await response.json();
-    if (!Array.isArray(products)) throw new TypeError('Products must be an array');
+    const sourceProducts = await response.json();
+    if (!Array.isArray(sourceProducts)) throw new TypeError('Products must be an array');
+    const products = sourceProducts.filter(isGuernseyProduct);
     addProductStructuredData(products);
     if (productCount) productCount.textContent = String(products.length).padStart(2, '0');
 
     productGrids.forEach((grid) => {
-      const mode = grid.dataset.mode;
       const limit = Number(grid.dataset.limit) || products.length;
-      const visibleProducts = mode === 'featured'
-        ? products.filter((product) => product.name.includes('건지울른스')).slice(0, limit)
-        : products.slice(0, limit);
+      const visibleProducts = products.slice(0, limit);
 
       const fragment = document.createDocumentFragment();
       visibleProducts.forEach((product, index) => fragment.append(createProductCard(product, index)));
