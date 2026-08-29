@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="theme-color" content="#101b2b">
+    <link rel="canonical" href="">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="">
+    <title>이야기 | 건지울른스 · 서플라이루트</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+  </head>
+  <body class="story-post-page">
+    <a class="skip-link" href="#main">본문으로 바로가기</a>
+    <header class="site-header" data-header>
+      <div class="header-inner">
+        <a class="wordmark" href="../index.html" aria-label="건지울른스 홈"><strong>GUERNSEY</strong><span>WOOLLENS · EST. 1976</span></a>
+        <button class="menu-button" type="submit" aria-expanded="false" aria-controls="site-nav" aria-label="메뉴 열기" data-menu-button><span></span><span></span></button>
+        <nav class="site-nav" id="site-nav" aria-label="주요 메뉴" data-menu>
+          <a href="../index.html">홈</a><a href="../about.html">내 소개</a><a href="../products.html">제품</a>
+          <a href="index.html" aria-current="page">이야기</a><a class="nav-contact" href="../contact.html">연락하기</a>
+        </nav>
+      </div>
+    </header>
+    <main class="post-shell" id="main">
+      <div class="post-top"><a class="rule-link" href="index.html"><span aria-hidden="true">←</span> 이야기 목록</a></div>
+      <div id="post-content" aria-live="polite"><p class="blog-loading">글을 불러오는 중입니다.</p></div>
+    </main>
+    <footer class="site-footer">
+      <a class="wordmark footer-wordmark" href="../index.html"><strong>GUERNSEY</strong><span>WOOLLENS · EST. 1976</span></a>
+      <div class="footer-copy"><p>좋은 브랜드가 한국의 고객에게 닿는 길을 만듭니다.</p><div class="footer-links"><a href="mailto:support@supplyroute.co.kr" target="_blank" rel="noopener noreferrer">support@supplyroute.co.kr</a><a href="https://www.instagram.com/guernseywoollens_kr/" target="_blank" rel="noopener noreferrer">@guernseywoollens_kr</a></div></div>
+      <p class="copyright">© <span data-year>2026</span> SUPPLY ROUTE</p>
+    </footer>
+    <script>
+      (() => {
+        const main = document.querySelector('#post-content');
+        const el = (tag, className, text) => {
+          const node = document.createElement(tag);
+          if(className) node.className = className;
+          if(text !== undefined) node.textContent = text;
+          return node;
+        };
+        const formatDate = (value) => {
+          const date = new Date(`${value}T00:00:00`);
+          return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'}).format(date);
+        };
+        const hrefOf = (post) => post.url || `post.html?id=${encodeURIComponent(post.id || '')}`;
+        const renderBody = (source) => {
+          const body = el('div','post-body');
+          String(source || '').replace(/\r\n/g,'\n').split(/\n\s*\n/).forEach((block) => {
+            const value = block.trim(); if(!value) return;
+            const lines = value.split('\n');
+            if(lines.every((line) => /^- /.test(line.trim()))){
+              const list = el('ul'); lines.forEach((line) => list.append(el('li',null,line.trim().slice(2)))); body.append(list);
+            } else if(/^## /.test(value)){ body.append(el('h2',null,value.slice(3).trim())); }
+            else { body.append(el('p',null,value)); }
+          });
+          return body;
+        };
+        const setAttribute = (selector, attribute, value) => { const node = document.querySelector(selector); if(node) node.setAttribute(attribute,value); };
+        const addStructuredData = (data) => { const script = document.createElement('script'); script.type = 'application/ld+json'; script.textContent = JSON.stringify(data); document.head.append(script); };
+        const setMetadata = (post) => {
+          const title = String(post.title || '이야기'); const description = String(post.description || post.summary || '').slice(0,160);
+          const url = `${location.origin}${location.pathname}?id=${encodeURIComponent(post.id || '')}`; const author = String(post.author || '').trim();
+          document.title = `${title} | 건지울른스`;
+          setAttribute('meta[name="description"]','content',description); setAttribute('meta[name="author"]','content',author);
+          setAttribute('link[rel="canonical"]','href',url); setAttribute('meta[property="og:title"]','content',title);
+          setAttribute('meta[property="og:description"]','content',description); setAttribute('meta[property="og:url"]','content',url);
+          const article = {'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,datePublished:String(post.date||''),dateModified:String(post.updated||post.date||''),mainEntityOfPage:url,keywords:Array.isArray(post.tags)?post.tags.join(', '):''};
+          if(author) article.author = {'@type':'Person',name:author}; addStructuredData(article);
+          const faq = Array.isArray(post.faq) ? post.faq.filter((item) => item && item.q && item.a) : [];
+          if(faq.length) addStructuredData({'@context':'https://schema.org','@type':'FAQPage',mainEntity:faq.map((item) => ({'@type':'Question',name:String(item.q),acceptedAnswer:{'@type':'Answer',text:String(item.a)}}))});
+        };
+        const notFound = () => {
+          const box = el('div','post-not-found'); box.append(el('h1',null,'글을 찾을 수 없습니다'),el('p',null,'주소가 잘못되었거나 삭제된 글일 수 있습니다.'));
+          const link = el('a','button button-navy','글 목록으로 돌아가기'); link.href = 'index.html'; box.append(link); main.replaceChildren(box);
+        };
+        const render = (items) => {
+          const id = new URLSearchParams(location.search).get('id') || new URLSearchParams(location.search).get('slug');
+          const posts = Array.isArray(items) ? items.slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||''))) : [];
+          const index = posts.findIndex((post) => String(post.id) === id || (post.url && String(post.url).replace(/\.html$/,'') === id));
+          if(index < 0){ notFound(); return; }
+          const post = posts[index]; setMetadata(post);
+          const article = el('article','post-article'); const header = el('header','post-heading');
+          const label = el('p','coordinate','FIELD JOURNAL / STORY');
+          const time = el('time',null,formatDate(post.date||'')); time.dateTime = post.date || '';
+          header.append(label,time,el('h1',null,String(post.title||'(제목 없음)')));
+          if(post.author){ const author = el('p','post-author',String(post.author)); header.append(author); }
+          if(Array.isArray(post.tags) && post.tags.length){ const tags = el('div','post-tags'); post.tags.forEach((tag) => tags.append(el('span',null,String(tag)))); header.append(tags); }
+          article.append(header,renderBody(post.body));
+          const faq = Array.isArray(post.faq) ? post.faq.filter((item) => item && item.q && item.a) : [];
+          if(faq.length){ const section = el('section','post-faq'); section.append(el('h2',null,'자주 묻는 질문')); faq.forEach((item) => { const detail = el('details'); detail.append(el('summary',null,String(item.q)),el('p',null,String(item.a))); section.append(detail); }); article.append(section); }
+          const older = posts[index+1]; const newer = posts[index-1];
+          if(older || newer){ const nav = el('nav','post-pagination'); nav.setAttribute('aria-label','이전 및 다음 글');
+            [[older,'이전 글'],[newer,'다음 글']].forEach(([item,label]) => { if(!item){ nav.append(el('span')); return; } const link = el('a'); link.href = hrefOf(item); link.append(el('span','post-pagination-label',label),el('strong',null,String(item.title||''))); nav.append(link); }); article.append(nav); }
+          main.replaceChildren(article);
+        };
+        fetch('posts.json',{cache:'no-store'}).then((response) => { if(!response.ok) throw new Error(String(response.status)); return response.json(); }).then(render).catch(notFound);
+      })();
+    </script>
+  </body>
+</html>
+
