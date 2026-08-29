@@ -68,4 +68,3 @@
 - `contact.html`은 이메일, SNS, 스토어의 세 경로를 아이콘 없는 대형 텍스트 버튼으로 보여준다.
 - 모든 외부 채널은 새 탭으로 열고 `noopener noreferrer`를 함께 사용한다.
 - 공개 페이지의 공통 푸터에는 이메일과 `@guernseywoollens_kr` 링크를 항상 노출한다.
-
