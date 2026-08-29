@@ -37,7 +37,7 @@ for (const file of publicPages) {
 
   record(`${file}: title`, Boolean(title) && !titles.has(title), title);
   record(`${file}: description`, description.length >= 50 && description.length <= 180, `${description.length}자`);
-  record(`${file}: canonical`, canonical.startsWith('https://guernsey-woollens-swpark.vercel.app/') && !canonicals.has(canonical), canonical);
+  record(`${file}: canonical`, canonical.startsWith('https://guernseywoollens-swpark.pages.dev/') && !canonicals.has(canonical), canonical);
   record(`${file}: Open Graph`, ogComplete);
   record(`${file}: H1`, h1Count === 1, `${h1Count}개`);
   record(`${file}: image alt`, missingAlt.length === 0, `${missingAlt.length}개 누락`);
