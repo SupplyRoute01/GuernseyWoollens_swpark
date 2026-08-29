@@ -63,6 +63,7 @@
 - 히어로 영상: 홈 첫 화면은 무음 자동재생 영상을 사용한다. `assets/hero-scrub.mp4`, `assets/hero-scrub-m.mp4`와 각 포스터 이미지는 Git에 포함되어 정적 호스팅에서 직접 접근 가능해야 한다.
 - 제품 데이터: `products.json`에 `name`, `price`, `image`, `url`을 추가하면 제품 페이지와 홈 대표 제품 목록이 자동 갱신된다.
 - 공개 제품 목록은 제품명에 `건지울른스`가 포함된 항목만 사용하며, 홈은 그중 앞의 3개를 자동 선택한다.
+- 장바구니: `assets/cart.js`와 `assets/cart.css`를 모든 공개 HTML에서 로드한다. 제품 카드 버튼은 `products.json`의 `name`, `price`, `url`을 `data-cart-add` 속성으로 자동 연결한다.
 - 대표 제품 상세: `product-detail.html`의 구매 링크와 제품 정보, `styles.css`의 `.product-detail-*` 규칙
 - 상세페이지 관련 제품: `products.json`에서 “건지울른스 코튼 나그랑 크루넥 스웨터 -”가 포함된 컬러 제품 중 3개를 자동 표시한다.
 

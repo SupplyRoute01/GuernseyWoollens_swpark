@@ -156,8 +156,12 @@ function createProductCard(product, index) {
   buyLink.href = product.url;
   buyLink.target = '_blank';
   buyLink.rel = 'noopener noreferrer';
-  buyLink.textContent = '구매하기';
-  buyLink.setAttribute('aria-label', `${product.name} 구매하기 — 새 탭에서 열림`);
+  buyLink.textContent = '장바구니 담기';
+  buyLink.setAttribute('aria-label', `${product.name} 장바구니 담기`);
+  buyLink.setAttribute('data-cart-add', '');
+  buyLink.setAttribute('data-name', product.name);
+  buyLink.setAttribute('data-price', String(product.price));
+  buyLink.setAttribute('data-url', product.url);
 
   footer.append(price, buyLink);
   content.append(label, title);
